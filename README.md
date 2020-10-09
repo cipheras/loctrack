@@ -5,10 +5,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/cipheras/loctrack?style=plastic)
 &nbsp;&nbsp;&nbsp;&nbsp;![GitHub All Releases](https://img.shields.io/github/downloads/cipheras/loctrack/total?style=plastic)
 
-&nbsp;&nbsp;&nbsp;&nbsp;![Code Quality](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=code%20quality&query=codequality&style=plastic&labelColor=grey&color=yellowgreen)
+[Code Quality](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=code%20quality&query=codequality&style=plastic&labelColor=grey&color=yellowgreen)
 &nbsp;&nbsp;&nbsp;&nbsp;![dependencies](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=dependencies&query=dependencies&style=plastic&labelColor=grey&color=green)
-&nbsp;&nbsp;&nbsp;&nbsp;![platform](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=platform&query=platform&style=plastic&labelColor=grey&color=purple)
 &nbsp;&nbsp;&nbsp;&nbsp;![build](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=build&query=build&style=plastic&labelColor=grey&color=green)
+&nbsp;&nbsp;&nbsp;&nbsp;![platform](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=platform&query=platform&style=plastic&labelColor=grey&color=purple)
+
 
 ## Installation
 You can either use a *precompiled binary* package for your architecture or you can compile **loctrack** from source.
@@ -16,16 +17,16 @@ You can either use a *precompiled binary* package for your architecture or you c
 
 Windows | Linux
 --------|-------
-[x64]() | [x64]()
+[&nbsp;x64]() | [x64]()
 
 For other versions or releases go to release page.
 
 ***NOTE:** In windows installtion is not needed. You can directly execute the **exe** file.*
 
 ### Installing precompiled binary in Linux
-In order to install precompiled binary, make sure you have installed **make**.
-Download **Makefile** from [here]() and keep it and your binary in the same directory.
-<br>Now open terminal in the same dir and run commands:
+* In order to install precompiled binary, make sure you have installed **make**.
+* Download **Makefile** from [here]() and keep it and your binary in the same directory.
+* Now open terminal in the same dir and run commands:
 
 To install:
 ```
@@ -41,29 +42,29 @@ make uninstall
 In order to compile from source, make sure you have installed **GO** of version at least **1.15.0** (get it from [here](https://golang.org/doc/install)).
 
 To install:
-`
+```
 make
-`
+```
 To uninstall:
-`
+```
 make uninstall
-`
+```
 To build:
-`
+```
 make build
-`
+```
 
 
 ## Usage
 For help type `loctrack -h`.
 ```
--c	For your own certificates located in cert folder
+-c  For your own certificates located in cert folder
 -d  Subdomain (optional)
--m	Manual Tunnel
+-m  Manual Tunnel
 -p  Port Number (optional) (default 8080)
 
 ```
-If you want to use your own **ssl/tls certificates** put them in folder **cert** and choose option `-c`.
+If you want to use your own **ssl/tls** certificates put them in folder **cert** and choose option `-c`.
 <br> Put your **ssh key** in ssh-key folder to use **service 2**.
 
 
@@ -74,19 +75,3 @@ If you want to use your own **ssl/tls certificates** put them in folder **cert**
 > Feel free to submit a bug, add features or issue a pull request.
 
 
-
-
-
-
-{
-    "style": ["plastic", "flat", "flat-square", "for-the-badge", "social"],
-    "logo": ["serverfault", "travis", "superuser", "bitcoin", "dependabot",],
-}
-{
-    "codequality": "A+",
-    "dependencies": "up to date",
-    "platform": "windows-x64 | linux-x64",
-    "build": "passing"
-}
-
-https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/23KS&label=<LABEL>&query=code quality&prefix=<PREFIX>&suffix=<SUFFIX>&style=plastic&labelColor=red&color=green&cacheSeconds=3600
