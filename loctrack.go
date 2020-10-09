@@ -13,6 +13,7 @@ import (
 	"os/signal"
 	"reflect"
 	"regexp"
+	"runtime"
 	"strconv"
 	"syscall"
 	"time"
@@ -30,14 +31,19 @@ var (
 )
 var url string
 
+const (
+	// VERSION ...
+	VERSION = "2.4.0"
+)
+
 func main() {
 	flag.Usage = func() {
 		Cprint(I, "Choose options. By default a tunnel will be created itself")
 		Cprint(I, "Run your own tunnel by using "+GREEN+"'-manual'"+BLUE+" flag")
-		Cprint(I, "Manual TLS certificate using "+GREEN+"'-c'"+BLUE+" flag. Keep your own certs in "+GREEN+"'cert'"++" folder")
-		fmt.Println("\n" + GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "#################################" + RESET)
+		Cprint(I, "Manual TLS certificate using "+GREEN+"'-c'"+BLUE+" flag. Keep your own certs in "+GREEN+"'cert'"+BLUE+" folder")
+		fmt.Println("\n" + GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "##################################" + RESET)
 		flag.PrintDefaults()
-		fmt.Println(GREEN + "####################################" + BLUE + "LocTrack" + GREEN + "###############################" + RESET)
+		fmt.Println(GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "##################################\n" + RESET)
 	}
 	flag.Parse()
 	// // Make log file
@@ -51,7 +57,9 @@ func main() {
 
 	interrupt()
 	banner()
-	// Cwindows() //for colors on cmd in window
+	if runtime.GOOS == "windows" {
+		Cwindows() //for colors on cmd in window
+	}
 	Cprint(I, "Try"+GREEN+" loctrack -h "+BLUE+"for help and other options")
 	if *mantunnel {
 		Cprint(T, "You have chosen manual mode. Run your own tunnel.")
@@ -62,7 +70,26 @@ func main() {
 }
 
 func banner() {
-	fmt.Println(CYAN, "Created by:", string(RESET))
+	bnr := `
+	██▓     ▒█████   ▄████▄  ▄▄▄█████▓ ██▀███   ▄▄▄       ▄████▄   ██ ▄█▀
+	▓██▒    ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██ ▒ ██▒▒████▄    ▒██▀ ▀█   ██▄█▒ 
+	▒██░    ▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ 
+	▒██░    ▒██   ██░▒▓▓▄ ▄██▒░ ▓██▓ ░ ▒██▀▀█▄  ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ 
+	░██████▒░ ████▓▒░▒ ▓███▀ ░  ▒██▒ ░ ░██▓ ▒██▒ ▓█   ▓██▒▒ ▓███▀ ░▒██▒ █▄
+	░ ▒░▓  ░░ ▒░▒░▒░ ░ ░▒ ▒  ░  ▒ ░░   ░ ▒▓ ░▒▓░ ▒▒   ▓▒█░░ ░▒ ▒  ░▒ ▒▒ ▓▒
+	░ ░ ▒  ░  ░ ▒ ▒░   ░  ▒       ░      ░▒ ░ ▒░  ▒   ▒▒ ░  ░  ▒   ░ ░▒ ▒░
+	  ░ ░   ░ ░ ░ ▒  ░          ░        ░░   ░   ░   ▒   ░        ░ ░░ ░ 
+		░  ░    ░ ░  ░ ░                  ░           ░  ░░ ░      ░  ░   
+					 ░                                    ░               
+	`
+	crtr := `
+	+-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+
+	|C| |i| |p| |h| |e| |r| |a| |s|
+	+-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+
+	`
+	fmt.Printf("/n%s%s%s", GREEN, bnr, RESET)
+	fmt.Print(CYAN + "Created by:" + GREEN + crtr + RESET)
+	time.Sleep(1500 * time.Millisecond)
 }
 
 func urlCreation() {
@@ -77,13 +104,13 @@ func urlCreation() {
 	sResp, err := client.Get("https://serveo.net")
 	// time.Sleep(1 * time.Second)
 	if err != nil {
-		fmt.Println(RED + BGBLACK + BLINK + BOLD + "Offline" + RESET)
+		fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
 		log.Println("Timeout for service 1")
 	} else {
 		if sResp.StatusCode == 200 {
 			log.Println("Service 1 Online")
 			sResp.Body.Close()
-			fmt.Println(GREEN + BGBLACK + BLINK + BOLD + "Online" + RESET)
+			fmt.Println(GREEN + BLINK + BOLD + "Online" + RESET)
 			if *subdomain == "" {
 				cmd = exec.Command("ssh", "-T", "-o", "StrictHostKeyChecking=no", "-o", "ServerAliveInterval=60", "-R", "80:localhost:"+strconv.Itoa(*port), "serveo.net")
 			} else {
@@ -119,8 +146,8 @@ func urlCreation() {
 	lrResp, err := client.Get("http://localhost.run")
 	// time.Sleep(1 * time.Second)
 	if err != nil {
-		fmt.Println(RED + BGBLACK + BLINK + BOLD + "Offline" + RESET)
-		fmt.Println(PURPLE + "Try again later...or report to the creator." + RESET)
+		fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
+		fmt.Println(PURPLE + "Try again later...or report to the creator.\n" + RESET)
 		log.Println("Timeout for service 2")
 		os.Exit(0)
 	}
@@ -154,7 +181,7 @@ func urlCreation() {
 		log.Println("failed to generate URL")
 		os.Exit(0)
 	}
-	fmt.Println(RED + BGBLACK + BLINK + BOLD + "Offline" + RESET)
+	fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
 	log.Println("Offline...service 2 is also down")
 	os.Exit(0)
 }
@@ -220,7 +247,7 @@ func interrupt() {
 		<-c
 		fmt.Print("\n" + CYAN + "[" + PURPLE + "*" + CYAN + "] " + PURPLE + "Aborting " + RESET)
 		for i := 1; i <= 6; i++ {
-			fmt.Print(PURPLE + BGBLACK + "# " + RESET)
+			fmt.Print(PURPLE + "# " + RESET)
 			time.Sleep(time.Millisecond * 200)
 		}
 		fmt.Print(CLEAR)

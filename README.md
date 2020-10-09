@@ -5,7 +5,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/cipheras/loctrack?style=plastic)
 &nbsp;&nbsp;&nbsp;&nbsp;![GitHub All Releases](https://img.shields.io/github/downloads/cipheras/loctrack/total?style=plastic)
 
-[Code Quality](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=code%20quality&query=codequality&style=plastic&labelColor=grey&color=yellowgreen)
+![Code Quality](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=code%20quality&query=codequality&style=plastic&labelColor=grey&color=yellowgreen)
 &nbsp;&nbsp;&nbsp;&nbsp;![dependencies](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=dependencies&query=dependencies&style=plastic&labelColor=grey&color=green)
 &nbsp;&nbsp;&nbsp;&nbsp;![build](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=build&query=build&style=plastic&labelColor=grey&color=green)
 &nbsp;&nbsp;&nbsp;&nbsp;![platform](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=platform&query=platform&style=plastic&labelColor=grey&color=purple)
@@ -17,11 +17,12 @@ You can either use a *precompiled binary* package for your architecture or you c
 
 Windows | Linux
 --------|-------
-[&nbsp;x64]() | [x64]()
+[win-x64]() | [linux-x64]()
 
 For other versions or releases go to release page.
 
-***NOTE:** In windows installtion is not needed. You can directly execute the **exe** file.*
+***NOTE:** In windows, installtion is not needed. You can directly execute the **exe** file.*
+*In cmd write `loctrack.exe -h`*
 
 ### Installing precompiled binary in Linux
 * In order to install precompiled binary, make sure you have installed **make**.
