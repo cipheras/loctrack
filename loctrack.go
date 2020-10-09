@@ -32,12 +32,12 @@ var url string
 
 func main() {
 	flag.Usage = func() {
-		Cprint(I, "Choose options. By default a tunnel will be created.")
-		Cprint(I, "Run your own tunnel using by using "+GREEN+"'-manual'"+BLUE+" flag")
-		Cprint(I, "Manual TLS certificate using "+GREEN+"'-c'"+BLUE+" flag. Keep your own certs in "+GREEN+"'cert'"+GREEN+" folder.")
-		fmt.Println("\n" + GREEN + "##################################" + BLUE + "LocTrack" + RED + "#################################" + RESET)
+		Cprint(I, "Choose options. By default a tunnel will be created itself")
+		Cprint(I, "Run your own tunnel by using "+GREEN+"'-manual'"+BLUE+" flag")
+		Cprint(I, "Manual TLS certificate using "+GREEN+"'-c'"+BLUE+" flag. Keep your own certs in "+GREEN+"'cert'"++" folder")
+		fmt.Println("\n" + GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "#################################" + RESET)
 		flag.PrintDefaults()
-		fmt.Println(GREEN + "####################################" + BLUE + "LocTrack" + RED + "###############################" + RESET)
+		fmt.Println(GREEN + "####################################" + BLUE + "LocTrack" + GREEN + "###############################" + RESET)
 	}
 	flag.Parse()
 	// // Make log file
@@ -51,6 +51,7 @@ func main() {
 
 	interrupt()
 	banner()
+	// Cwindows() //for colors on cmd in window
 	Cprint(I, "Try"+GREEN+" loctrack -h "+BLUE+"for help and other options")
 	if *mantunnel {
 		Cprint(T, "You have chosen manual mode. Run your own tunnel.")

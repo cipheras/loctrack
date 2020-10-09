@@ -1,6 +1,6 @@
 TARGET=loctrack
 PACKAGES=handler
-STATUS= -e "\033[5m\033[32mcompleted\033[0m \n"
+STATUS= -e "\033[5m\033[32mDONE\033[0m \n"
 
 .PHONY: all
 
@@ -8,7 +8,7 @@ all: build install clean
 
 build:
 	@echo -ne "\n[+] Creating a build..."
-	@go build -o ./bin/$(TARGET) -mod=vendor
+	@go build -o $(TARGET) -mod=vendor
 	@echo $(STATUS)
 
 clean:	
@@ -16,12 +16,14 @@ clean:
 	@go clean
 	@sudo rm -rf ~/go/pkg/mod/github.com/cipheras
 	@rm -f ~/go/bin/$(TARGET)
-	@rm -rf ./bin
+	# @rm -rf ./bin
+	rm $(TARGET)
 	@echo $(STATUS)
 
-install: build
+# install: build
+install:
 	@echo -ne "\n[+] Installing..."
-	@cp ./bin/$(TARGET) /usr/local/bin
+	@cp $(TARGET) /usr/local/bin
 	@echo $(STATUS)
 
 uninstall: 
