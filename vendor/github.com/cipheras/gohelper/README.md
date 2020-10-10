@@ -56,7 +56,7 @@ fmt.Println(BLUE, "hello", BOLD, var1, BLINK, var2, "!!", RESET)
 - [ ] Add more text and background colors
 
 ## License
-**gohelper** is made by **@cipheras** and is released under the terms of the &nbsp;![GitHub License](https://img.shields.io/github/license/cipheras/gohelper)
+**gohelper** is made by **@cipheras** and is released under the terms of the &nbsp;![GitHub License](https://img.shields.io/github/license/cipheras/gohelper?color=darkgreen)
 
 ## Contact &nbsp; [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fcipheras%2Fgohelper&label=Tweet)](https://twitter.com/intent/tweet?text=Hi:&url=https%3A%2F%2Fgithub.com%2Fcipheras%2Fgohelper)
 

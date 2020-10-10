@@ -14,10 +14,7 @@ build:
 clean:	
 	@echo -ne "\n[+] Cleaning..."
 	@go clean
-	@sudo rm -rf ~/go/pkg/mod/github.com/cipheras
-	@rm -f ~/go/bin/$(TARGET)
-	# @rm -rf ./bin
-	rm $(TARGET)
+	@go clean -modcache
 	@echo $(STATUS)
 
 # install: build

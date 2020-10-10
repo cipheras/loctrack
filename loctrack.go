@@ -13,7 +13,6 @@ import (
 	"os/signal"
 	"reflect"
 	"regexp"
-	"runtime"
 	"strconv"
 	"syscall"
 	"time"
@@ -33,7 +32,7 @@ var url string
 
 const (
 	// VERSION ...
-	VERSION = "2.4.0"
+	VERSION = "1.4.1"
 )
 
 func main() {
@@ -57,9 +56,7 @@ func main() {
 
 	interrupt()
 	banner()
-	if runtime.GOOS == "windows" {
-		Cwindows() //for colors on cmd in window
-	}
+	Cwindows() //for colors on cmd in window
 	Cprint(I, "Try"+GREEN+" loctrack -h "+BLUE+"for help and other options")
 	if *mantunnel {
 		Cprint(T, "You have chosen manual mode. Run your own tunnel.")
