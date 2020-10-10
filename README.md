@@ -76,7 +76,7 @@ If you want to use your own **ssl/tls** certificates put them in folder **cert**
 *This tools is merely a POC of what attackers can do. Author is not responsible for any use of this tool in any nefarious activity.*
 
 ## License
-**loctrack** is made by **@cipheras** and is released under the terms of the &nbsp;![GitHub License](https://img.shields.io/github/license/cipheras/loctrack&color=darkgreen)
+**loctrack** is made by **@cipheras** and is released under the terms of the &nbsp;![GitHub License](https://img.shields.io/github/license/cipheras/loctrack?color=darkgreen)
 
 ## Contact &nbsp; [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fcipheras%2Floctrack&label=Tweet)](https://twitter.com/intent/tweet?text=Hi:&url=https%3A%2F%2Fgithub.com%2Fcipheras%2Floctrack)
 > Feel free to submit a bug, add features or issue a pull request.
