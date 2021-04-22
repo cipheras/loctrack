@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -25,38 +26,35 @@ var (
 	// arguments
 	mantunnel = flag.Bool("m", false, "Manual Tunnel")
 	tls       = flag.Bool("c", false, "For your own certificates located in cert folder")
-	subdomain = flag.String("d", "", "Subdomain (optional)")
-	port      = flag.Int("p", 8080, "Port Number (optional)")
+	subdomain = flag.String("d", "", "Subdomain")
+	port      = flag.Int("p", 8080, "Port Number")
 )
 var url string
 
 const (
 	// VERSION ...
-	VERSION = "1.4.1"
+	VERSION = "v1.4.2"
 )
 
 func main() {
 	flag.Usage = func() {
 		Cprint(I, "Choose options. By default a tunnel will be created itself")
-		Cprint(I, "Run your own tunnel by using "+GREEN+"'-manual'"+BLUE+" flag")
+		Cprint(I, "Run your own tunnel by using "+GREEN+"'-m'"+BLUE+" flag")
 		Cprint(I, "Manual TLS certificate using "+GREEN+"'-c'"+BLUE+" flag. Keep your own certs in "+GREEN+"'cert'"+BLUE+" folder")
 		fmt.Println("\n" + GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "##################################" + RESET)
 		flag.PrintDefaults()
 		fmt.Println(GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "##################################\n" + RESET)
 	}
 	flag.Parse()
-	// // Make log file
-	// if _, err := os.Stat("logs"); os.IsNotExist(err) {
-	// 	os.Mkdir("logs", os.ModePerm)
-	// }
-	f, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
-	Try("", err, false)
-	log.SetOutput(f)
-	defer f.Close()
 
+	err := Flog()
+	Try(err, false, "creating logs")
+	err = Cwindows()
+	Try(err, false, "windows color support")
 	interrupt()
 	banner()
-	Cwindows() //for colors on cmd in window
+	checkUpdates()
+
 	Cprint(I, "Try"+GREEN+" loctrack -h "+BLUE+"for help and other options")
 	if *mantunnel {
 		Cprint(T, "You have chosen manual mode. Run your own tunnel.")
@@ -68,9 +66,9 @@ func main() {
 
 func banner() {
 	bnr := `
-	██▓     ▒█████   ▄████▄  ▄▄▄█████▓ ██▀███   ▄▄▄       ▄████▄   ██ ▄█▀
+	██▓     ▒█████   ▄████▄  ▄▄▄█████▓ ██▀███   ▄▄▄       ▄████▄   ██ ▄█▀ ` + BLUE + `
 	▓██▒    ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██ ▒ ██▒▒████▄    ▒██▀ ▀█   ██▄█▒ 
-	▒██░    ▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ 
+	▒██░    ▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ ` + GREEN + `
 	▒██░    ▒██   ██░▒▓▓▄ ▄██▒░ ▓██▓ ░ ▒██▀▀█▄  ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ 
 	░██████▒░ ████▓▒░▒ ▓███▀ ░  ▒██▒ ░ ░██▓ ▒██▒ ▓█   ▓██▒▒ ▓███▀ ░▒██▒ █▄
 	░ ▒░▓  ░░ ▒░▒░▒░ ░ ░▒ ▒  ░  ▒ ░░   ░ ▒▓ ░▒▓░ ▒▒   ▓▒█░░ ░▒ ▒  ░▒ ▒▒ ▓▒
@@ -80,13 +78,30 @@ func banner() {
 					 ░                                    ░               
 	`
 	crtr := `
-	+-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+
+	+-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+	
 	|C| |i| |p| |h| |e| |r| |a| |s|
 	+-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+
 	`
-	fmt.Printf("/n%s%s%s", GREEN, bnr, RESET)
+	fmt.Print("\n", GREEN, bnr, RESET)
 	fmt.Print(CYAN + "Created by:" + GREEN + crtr + RESET)
-	time.Sleep(1500 * time.Millisecond)
+	fmt.Println(CYAN + "Version: " + RED + VERSION + RESET)
+	time.Sleep(1200 * time.Millisecond)
+}
+
+func checkUpdates() {
+	resp, err := http.Get("https://api.github.com/repos/cipheras/loctrack/releases")
+	Try(err, false, "checking for updates")
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	Try(err, false, "reading release info from api")
+	var jsondata []map[string]interface{}
+	err = json.Unmarshal(data, &jsondata)
+	Try(err, false, "parsing json")
+	version := jsondata[0]["tag_name"].(string)
+	releasName := jsondata[0]["name"].(string)
+	if version != VERSION {
+		Cprint(I, "Update available..."+YELLOW+version+" ["+releasName+"]")
+	}
 }
 
 func urlCreation() {
@@ -102,10 +117,10 @@ func urlCreation() {
 	// time.Sleep(1 * time.Second)
 	if err != nil {
 		fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
-		log.Println("Timeout for service 1")
+		Try(errors.New("timeout for service 1"), false)
 	} else {
 		if sResp.StatusCode == 200 {
-			log.Println("Service 1 Online")
+			Try(nil, false, "service 1 is online")
 			sResp.Body.Close()
 			fmt.Println(GREEN + BLINK + BOLD + "Online" + RESET)
 			if *subdomain == "" {
@@ -116,11 +131,11 @@ func urlCreation() {
 			cmd.Stdin = os.Stdin
 			cmd.Stdout = &stdout
 			cmd.Start()
-			Try("SSH command error", err, false)
+			Try(err, false, "running SSH")
 			// defer cmd.Process.Kill()
 			re, err := regexp.Compile(`https:\/\/.+serveo.*\.com`)
-			Try("Regexp failed", err, false)
-			for i := 0; i < 8; i++ {
+			Try(err, false, "finding URL")
+			for i := 0; i < 5; i++ {
 				url = re.FindString(stdout.String())
 				if url != "" {
 					Cprint(N, WHITE+"URL: "+GREEN+url)
@@ -129,8 +144,7 @@ func urlCreation() {
 				time.Sleep(1 * time.Second)
 			}
 			cmd.Process.Kill()
-			Cprint(E, "Failed to generate URL")
-			log.Println("failed to generate URL")
+			Try(errors.New("fail"), false, "Failed to generate URL")
 		} else {
 			fmt.Println(RED + BGBLACK + BLINK + BOLD + "Offline" + RESET)
 			log.Println("Offline...service 1 down")
@@ -145,12 +159,11 @@ func urlCreation() {
 	if err != nil {
 		fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
 		fmt.Println(PURPLE + "Try again later...or report to the creator.\n" + RESET)
-		log.Println("Timeout for service 2")
-		os.Exit(0)
+		Try(errors.New("timeout for service 2"), true)
 	}
 	if lrResp.StatusCode == 200 {
 		lrResp.Body.Close()
-		fmt.Println(GREEN + BGBLACK + BLINK + BOLD + "Online" + RESET)
+		fmt.Println(GREEN + BLINK + BOLD + "Online" + RESET)
 		if *subdomain == "" {
 			cmd = exec.Command("ssh", "-T", "-i", "ssh-key/rsa", "-o", "StrictHostKeyChecking=no", "-o", "ServerAliveInterval=60", "-R", "80:localhost:"+strconv.Itoa(*port), "ssh.localhost.run")
 		} else {
@@ -161,10 +174,10 @@ func urlCreation() {
 		// cmd.Stdout = os.Stdout
 		// cmd.Stderr = os.Stderr
 		err := cmd.Start()
-		Try("SSH command error", err, true)
+		Try(err, true, "running SSH")
 		// defer cmd.Process.Kill()
-		re, err := regexp.Compile(`http:\/\/.+localhost\.run`)
-		Try("Regexp failed", err, true)
+		re, err := regexp.Compile(`http.+localhost.run`)
+		Try(err, true, "finding URL")
 		for i := 0; i < 8; i++ {
 			url = re.FindString(stdout.String())
 			if url != "" {
@@ -174,9 +187,7 @@ func urlCreation() {
 			time.Sleep(1 * time.Second)
 		}
 		cmd.Process.Kill()
-		Cprint(E, "Failed to generate URL")
-		log.Println("failed to generate URL")
-		os.Exit(0)
+		Try(errors.New("fail"), true, "Failed to generate URL")
 	}
 	fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
 	log.Println("Offline...service 2 is also down")
@@ -194,7 +205,7 @@ func templateSel() string {
 	}
 
 	templateInfo, err := os.Open("template/templates.json")
-	Try("", err, true)
+	Try(err, true, "reading templates")
 	defer templateInfo.Close()
 	data, err := ioutil.ReadAll(templateInfo)
 	// var result map[string]interface{}
@@ -211,7 +222,7 @@ Site:
 	numT := len(templates.Templates)
 	if choice < 1 || numT < choice {
 		Cprint(W, "Invaid option...try again")
-		time.Sleep(1800 * time.Millisecond)
+		time.Sleep(1200 * time.Millisecond)
 		fmt.Println(CLEAR) //clear console
 		Cprint(N, WHITE+"URL: "+RESET+GREEN+url)
 		goto Site
@@ -230,11 +241,11 @@ func server(hndlr string) {
 	Cprint(I, "Press "+GREEN+"Ctrl-C"+BLUE+" to stop the server")
 	if *tls {
 		err := http.ListenAndServeTLS(":"+strconv.Itoa(*port), "cert/server.crt", "cert/server.key", nil) //with own TLS cert
-		Try("", err, true)
+		Try(err, true, "starting \"https\" server with SSL certificates")
 		return
 	}
 	err := http.ListenAndServe(":"+strconv.Itoa(*port), nil) //with default cert
-	Try("", err, true)
+	Try(err, true, "starting \"http\" server")
 }
 
 func interrupt() {
@@ -243,7 +254,7 @@ func interrupt() {
 	go func() {
 		<-c
 		fmt.Print("\n" + CYAN + "[" + PURPLE + "*" + CYAN + "] " + PURPLE + "Aborting " + RESET)
-		for i := 1; i <= 6; i++ {
+		for i := 1; i <= 5; i++ {
 			fmt.Print(PURPLE + "# " + RESET)
 			time.Sleep(time.Millisecond * 200)
 		}

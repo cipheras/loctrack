@@ -1,8 +1,4 @@
-github.com/cipheras/gohelper v1.2.1 h1:jrg3r96+gL1XHWQs3q6wsBFKxEuTszHFZyjV5x7pkGA=
-github.com/cipheras/gohelper v1.2.1/go.mod h1:lI30pRBLe0eZMDV7CkH+QTinAouDb34tsa11D2pQ59w=
-github.com/cipheras/gohelper v1.3.0 h1:Sakks5nQv3vxp4zDtWDKzNXf9PuGZJD2Ei//8FGonlg=
-github.com/cipheras/gohelper v1.3.0/go.mod h1:LAdAhKloC2GntpxN9mRKANRL/4eo18cYxEgVgRzq9oQ=
-github.com/cipheras/gohelper v1.3.3 h1:1avbgDPrJ4E+DEQSGZu4AXo5JJxruy1VY7yDLL7gLpU=
-github.com/cipheras/gohelper v1.3.3/go.mod h1:LAdAhKloC2GntpxN9mRKANRL/4eo18cYxEgVgRzq9oQ=
+github.com/cipheras/gohelper v1.4.4 h1:DI81QfbT7LqgEk8cK2b1+PCuKFC7lZ79Dwli3S4CmtE=
+github.com/cipheras/gohelper v1.4.4/go.mod h1:LAdAhKloC2GntpxN9mRKANRL/4eo18cYxEgVgRzq9oQ=
 golang.org/x/sys v0.0.0-20201009025420-dfb3f7c4e634 h1:bNEHhJCnrwMKNMmOx3yAynp5vs5/gRy+XWFtZFu7NBM=
 golang.org/x/sys v0.0.0-20201009025420-dfb3f7c4e634/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=

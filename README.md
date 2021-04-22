@@ -17,7 +17,7 @@ You can either use a precompiled binary package for your architecture or you can
 
 Windows | Linux
 --------|-------
-[win-x64](https://github.com/cipheras/loctrack/releases/download/v1.4.1/loctrack-win-x64.exe) | [linux-x64](https://github.com/cipheras/loctrack/releases/download/v1.4.1/loctrack-linux-x64)
+[win-x64](https://github.com/cipheras/loctrack/releases/download/v1.4.2/loctrack-win-x64.exe) | [linux-x64](https://github.com/cipheras/loctrack/releases/download/v1.4.2/loctrack-linux-x64)
 
 For other versions or releases go to release page.
 
@@ -25,17 +25,17 @@ For other versions or releases go to release page.
 *In cmd write `loctrack.exe -h`*
 
 ### Installing precompiled binary in Linux
-* In order to install precompiled binary, make sure you have installed **make**.
-* Download **Makefile** from [here](https://github.com/cipheras/loctrack/releases/download/v1.4.1/Makefile) and keep it and your binary in the same directory.
+* In order to install precompiled binary, make sure you have installed `make`.
+* Download **Makefile** from [here](https://github.com/cipheras/loctrack/releases/download/v1.4.2/Makefile) and keep it and your binary in the same directory.
 * Now open terminal in the same dir and run commands:
 
 To install:
 ```
-make install
+sudo make install
 ```
 To uninstall:
 ```
-make uninstall
+sudo make uninstall
 ```
 
 
@@ -44,11 +44,11 @@ In order to compile from source, make sure you have installed **GO** of version 
 
 To install:
 ```
-make
+sudo make
 ```
 To uninstall:
 ```
-make uninstall
+sudo make uninstall
 ```
 To build:
 ```
@@ -66,7 +66,8 @@ For help type `loctrack -h`.
 
 ```
 If you want to use your own **ssl/tls** certificates put them in folder **cert** and choose option `-c`.
-<br> Put your **ssh key** in ssh-key folder to use **service 2**.
+<br> If you want to use your own **SSH keys**, put your **ssh key** in ssh-key folder.
+<br> And run command `chmod 700 ssh-key/rsa`.
 
 ## To Do
 - [x] cmd color support

