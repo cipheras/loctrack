@@ -7,23 +7,23 @@ STATUS= "\033[5m\033[32mDONE\033[0m \n"
 all: build install clean
 
 build:
-	@echo -n "\n[+] Creating a build..."
-	@go build -o $(TARGET)
+	@echo -n "\n[\033[5m\033[32m+\033[0m] Creating a build..."
+	@go build -ldflags="-s -w" -o $(TARGET)
 	@echo $(STATUS)
 
 clean:	
-	@echo -n "\n[+] Cleaning..."
+	@echo -n "\n[\033[5m\033[32m+\033[0m] Cleaning..."
 	@go clean
 	@go clean -modcache
 	@echo $(STATUS)
 
 # install: build
 install:
-	@echo -n "\n[+] Installing..."
+	@echo -n "\n[\033[5m\033[32m+\033[0m] Installing..."
 	@cp $(TARGET) /usr/local/bin
 	@echo $(STATUS)
 
 uninstall: 
-	@echo -n "\n[+] Uninstalling..."
+	@echo -n "\n[\033[5m\033[32m+\033[0m] Uninstalling..."
 	@rm /usr/local/bin/$(TARGET)
 	@echo $(STATUS)
