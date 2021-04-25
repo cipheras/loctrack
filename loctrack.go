@@ -32,7 +32,7 @@ var url string
 
 const (
 	// VERSION ...
-	VERSION = "v1.5.0"
+	VERSION = "v1.5.1"
 )
 
 func main() {
@@ -58,7 +58,7 @@ func main() {
 	Cprint(I, "Try"+GREEN+" loctrack -h "+BLUE+"for help and other options")
 	Cprint(N, "Unpack static files")
 	time.Sleep(900 * time.Millisecond)
-	err=unpkr(".")
+	err = unpkr(".")
 	Try(err, true, "unpacking static files")
 	err = os.Chmod("ssh-key/rsa", 0700)
 	Try(err, true, "changing rsa key file permission")
@@ -205,7 +205,7 @@ func urlCreation() error {
 		}
 		cmd.Process.Kill()
 		Cprint(E, "Failed to generate URL")
-		Try(errors.New("Failed to generate URL2"), false,)
+		Try(errors.New("Failed to generate URL2"), false)
 		return errors.New("failed to generate url2")
 	}
 	fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
