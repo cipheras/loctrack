@@ -7,7 +7,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -33,12 +32,13 @@ var url string
 
 const (
 	// VERSION ...
-	VERSION = "v1.4.2"
+	VERSION = "v1.5.0"
 )
 
 func main() {
 	flag.Usage = func() {
 		Cprint(I, "Choose options. By default a tunnel will be created itself")
+		Cprint(I, "Put binary file in the same dir with static files")
 		Cprint(I, "Run your own tunnel by using "+GREEN+"'-m'"+BLUE+" flag")
 		Cprint(I, "Manual TLS certificate using "+GREEN+"'-c'"+BLUE+" flag. Keep your own certs in "+GREEN+"'cert'"+BLUE+" folder")
 		fmt.Println("\n" + GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "##################################" + RESET)
@@ -56,17 +56,33 @@ func main() {
 	checkUpdates()
 
 	Cprint(I, "Try"+GREEN+" loctrack -h "+BLUE+"for help and other options")
+	Cprint(N, "Unpack static files")
+	time.Sleep(900 * time.Millisecond)
+	err=unpkr(".")
+	Try(err, true, "unpacking static files")
+	err = os.Chmod("ssh-key/rsa", 0700)
+	Try(err, true, "changing rsa key file permission")
 	if *mantunnel {
 		Cprint(T, "You have chosen manual mode. Run your own tunnel.")
 	} else {
-		urlCreation()
+		err := urlCreation()
+		if err != nil {
+			err = os.RemoveAll("cert")
+			Try(err, false)
+			err = os.RemoveAll("ssh-key")
+			Try(err, false)
+			err = os.RemoveAll("template")
+			Try(err, false)
+			fmt.Printf("\n")
+			Try(errors.New("cleaning & exiting"), true)
+		}
 	}
 	server(templateSel())
 }
 
 func banner() {
 	bnr := `
-	██▓     ▒█████   ▄████▄  ▄▄▄█████▓ ██▀███   ▄▄▄       ▄████▄   ██ ▄█▀ ` + BLUE + `
+	██▓     ▒█████   ▄████▄  ▄▄▄█████▓ ██▀███   ▄▄▄       ▄████▄   ██ ▄█▀ ` + PURPLE + `
 	▓██▒    ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██ ▒ ██▒▒████▄    ▒██▀ ▀█   ██▄█▒ 
 	▒██░    ▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ ` + GREEN + `
 	▒██░    ▒██   ██░▒▓▓▄ ▄██▒░ ▓██▓ ░ ▒██▀▀█▄  ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ 
@@ -104,7 +120,7 @@ func checkUpdates() {
 	}
 }
 
-func urlCreation() {
+func urlCreation() error {
 	client := http.Client{
 		Timeout: 5 * time.Second,
 	}
@@ -139,15 +155,15 @@ func urlCreation() {
 				url = re.FindString(stdout.String())
 				if url != "" {
 					Cprint(N, WHITE+"URL: "+GREEN+url)
-					return
+					return nil
 				}
 				time.Sleep(1 * time.Second)
 			}
 			cmd.Process.Kill()
-			Try(errors.New("fail"), false, "Failed to generate URL")
+			Try(errors.New("fail 1"), false, "Failed to generate URL")
 		} else {
 			fmt.Println(RED + BGBLACK + BLINK + BOLD + "Offline" + RESET)
-			log.Println("Offline...service 1 down")
+			Try(errors.New("Offline...service 1 down"), false)
 		}
 	}
 	time.Sleep(1500 * time.Millisecond)
@@ -158,8 +174,9 @@ func urlCreation() {
 	// time.Sleep(1 * time.Second)
 	if err != nil {
 		fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
-		fmt.Println(PURPLE + "Try again later...or report to the creator.\n" + RESET)
-		Try(errors.New("timeout for service 2"), true)
+		Cprint(T, "Try again later...or report to the creator.")
+		Try(errors.New("timeout for service 2"), false)
+		return err
 	}
 	if lrResp.StatusCode == 200 {
 		lrResp.Body.Close()
@@ -182,16 +199,18 @@ func urlCreation() {
 			url = re.FindString(stdout.String())
 			if url != "" {
 				Cprint(N, WHITE+"URL: "+RESET+GREEN+url)
-				return
+				return nil
 			}
 			time.Sleep(1 * time.Second)
 		}
 		cmd.Process.Kill()
-		Try(errors.New("fail"), true, "Failed to generate URL")
+		Cprint(E, "Failed to generate URL")
+		Try(errors.New("Failed to generate URL2"), false,)
+		return errors.New("failed to generate url2")
 	}
 	fmt.Println(RED + BLINK + BOLD + "Offline" + RESET)
-	log.Println("Offline...service 2 is also down")
-	os.Exit(0)
+	Try(errors.New("Offline...service 2 is also down"), false)
+	return errors.New("Both services offline")
 }
 
 func templateSel() string {
@@ -253,14 +272,18 @@ func interrupt() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		fmt.Print("\n" + CYAN + "[" + PURPLE + "*" + CYAN + "] " + PURPLE + "Aborting " + RESET)
+		err := os.RemoveAll("cert")
+		Try(err, false)
+		err = os.RemoveAll("ssh-key")
+		Try(err, false)
+		err = os.RemoveAll("template")
+		Try(err, false)
+		fmt.Print("\n" + CYAN + "[" + PURPLE + "*" + CYAN + "] " + PURPLE + "Aborting & Cleaning " + RESET)
 		for i := 1; i <= 5; i++ {
 			fmt.Print(PURPLE + "# " + RESET)
 			time.Sleep(time.Millisecond * 200)
 		}
 		fmt.Print(CLEAR)
-		// fmt.Print("\n\n")
-		// time.Sleep(1500 * time.Millisecond)
-		os.Exit(0)
+		Try(errors.New("\"ctrl+c\" by the client - aborting & cleaning"), true)
 	}()
 }
