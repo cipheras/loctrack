@@ -17,7 +17,7 @@ You can either use a precompiled binary package for your architecture or you can
 
 Windows | Linux
 --------|-------
-[win-x64](https://github.com/cipheras/loctrack/releases/download/v1.4.2/loctrack-win-x64.exe) | [linux-x64](https://github.com/cipheras/loctrack/releases/download/v1.4.2/loctrack-linux-x64)
+[win-x64](https://github.com/cipheras/loctrack/releases/download/v1.5.1/loctrack-win-x64.exe) | [linux-x64](https://github.com/cipheras/loctrack/releases/download/v1.5.1/loctrack-linux-x64)
 
 For other versions or releases go to release page.
 
@@ -26,7 +26,7 @@ For other versions or releases go to release page.
 
 ### Installing precompiled binary in Linux
 * In order to install precompiled binary, make sure you have installed `make`.
-* Download **Makefile** from [here](https://github.com/cipheras/loctrack/releases/download/v1.4.2/Makefile) and keep it and your binary in the same directory.
+* Download **Makefile** from [here](https://github.com/cipheras/loctrack/releases/download/v1.5.1/Makefile) and keep it and your binary in the same directory.
 * Now open terminal in the same dir and run commands:
 
 To install:
