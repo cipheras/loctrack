@@ -10,6 +10,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;![build](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=build&query=build&style=plastic&labelColor=grey&color=darkgreen)
 &nbsp;&nbsp;&nbsp;&nbsp;![platform](https://img.shields.io/badge/dynamic/json?url=https://jsonkeeper.com/b/KNO7&label=platform&query=platform&style=plastic&labelColor=grey&color=purple)
 
+![example](../assets/screen.gif?raw=true)
 
 ## Installation
 You can either use a precompiled binary package for your architecture or you can compile **loctrack** from source.
