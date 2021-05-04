@@ -134,7 +134,7 @@ func urlCreation() error {
 			} else {
 				cmd = exec.Command("ssh", "-T", "-o", "StrictHostKeyChecking=no", "-o", "ServerAliveInterval=60", "-R", *subdomain+":80:localhost:"+strconv.Itoa(*port), "serveo.net")
 			}
-			cmd.Stdin = os.Stdin
+			// cmd.Stdin = os.Stdin
 			cmd.Stdout = &stdout
 			cmd.Start()
 			Try(err, false, "running SSH")
