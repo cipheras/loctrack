@@ -186,7 +186,7 @@ func urlCreation() error {
 		} else {
 			cmd = exec.Command("ssh", "-T", "-i", "ssh-key/rsa", "-o", "StrictHostKeyChecking=no", "-o", "ServerAliveInterval=60", "-R", "80:localhost:"+strconv.Itoa(*port), *subdomain+"@ssh.localhost.run")
 		}
-		cmd.Stdin = os.Stdin
+		// cmd.Stdin = os.Stdin
 		cmd.Stdout = &stdout
 		// cmd.Stdout = os.Stdout
 		// cmd.Stderr = os.Stderr
