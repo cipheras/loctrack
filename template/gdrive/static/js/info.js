@@ -110,12 +110,20 @@ function information()
   // java state
   java = navigator.javaEnabled()
 
+  // Ip
+  // https://www.cloudflare.com/cdn-cgi/trace  
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", 'https://json.geoiplookup.io/', false ); // false for synchronous request
+  xmlHttp.send( null );
+  var ipp = xmlHttp.responseText;
+  // console.log(xmlHttp.responseText);
+
   //
   $.ajax({
     type: 'POST',
-    url: '/',
-    data: {Ptf: ptf, Brw: brw, Cc: cc, Ram: ram, Ven: ven, Ren: ren, Ht: ht, Wd: wd, Os: os, Java: java},
-    success: function(){console.log('Got Device Information');},
+    url: '/rxWyhjKl',
+    data: { Ptf: ptf, Brw: brw, Cc: cc, Ram: ram, Ven: ven, Ren: ren, Ht: ht, Wd: wd, Os: os, Java: java, Ipp:ipp },
+    // success: function(){console.log('Got Device Information');},
     mimeType: 'text'
   });
 }
