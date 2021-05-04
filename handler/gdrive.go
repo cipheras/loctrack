@@ -1,20 +1,32 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
+	"html/template"
 	"net/http"
+
+	c "github.com/cipheras/gohelper"
 )
 
-// Gdrive ...
-// func (h Hndl) Gdrive() {
-// 	http.HandleFunc("/", gdrive)
-// }
+// Demo ...
+func (h Hndl) Gdrive() {
+	fs := http.FileServer(http.Dir("template/gdrive"))
+	http.Handle("/static/", fs)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
 
-func gdrive(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "test")
-	// t, err := template.ParseFiles("in.htm")
-	// Try("", err, true)
-	// err:= t.Execute(w,var)
-	// fmt.Println("-" + r.URL.Path)
-	// fmt.Fprintln(w, "test")
+		case "GET": //GET request handler
+			tpl, err := template.ParseFiles("template/gdrive/index.html")
+			c.Try(err, false, "parsing gdrive/index.html")
+			err = tpl.Execute(w, nil)
+			c.Try(err, false, "executing template")
+
+		default:
+			fmt.Fprintln(w, "Request not supported")
+			fmt.Println("# Unsupported request")
+			c.Try(errors.New("unsupported request"), false)
+			return
+		}
+	})
 }

