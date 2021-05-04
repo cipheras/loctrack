@@ -237,7 +237,7 @@ Site:
 	}
 	fmt.Print(GREEN + "\n>> " + RESET)
 	var choice int
-	fmt.Scanln(&choice)
+	fmt.Scanf("%v\n", &choice)
 	numT := len(templates.Templates)
 	if choice < 1 || numT < choice {
 		Cprint(W, "Invaid option...try again")
