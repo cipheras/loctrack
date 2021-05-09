@@ -36,6 +36,10 @@ const (
 )
 
 func main() {
+    err := Flog()
+	Try(err, false, "creating logs")
+	err = Cwindows()
+	Try(err, false, "windows color support")
 	flag.Usage = func() {
 		Cprint(I, "Choose options. By default a tunnel will be created itself")
 		Cprint(I, "Put binary file in the same dir with static files")
@@ -46,11 +50,6 @@ func main() {
 		fmt.Println(GREEN + "##################################" + BLUE + "LocTrack" + GREEN + "##################################\n" + RESET)
 	}
 	flag.Parse()
-
-	err := Flog()
-	Try(err, false, "creating logs")
-	err = Cwindows()
-	Try(err, false, "windows color support")
 	interrupt()
 	banner()
 	checkUpdates()
