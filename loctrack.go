@@ -36,7 +36,7 @@ const (
 )
 
 func main() {
-    err := Flog()
+	err := Flog()
 	Try(err, false, "creating logs")
 	err = Cwindows()
 	Try(err, false, "windows color support")
