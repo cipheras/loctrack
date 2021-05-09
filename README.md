@@ -74,7 +74,7 @@ If you want to use your own **ssl/tls** certificates put them in folder **cert**
 - [ ] More templates  
 
 ## Disclaimer
-*This tools is merely a POC of what attackers can do. Author is not responsible for any use of this tool in any nefarious activity.*
+*This tool is merely a POC of what attackers can do. Author is not responsible for any use of this tool in any nefarious activity.*
 
 ## License
 **loctrack** is made by **@cipheras** and is released under the terms of the &nbsp;![GitHub License](https://img.shields.io/github/license/cipheras/loctrack?color=darkgreen)
