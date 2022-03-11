@@ -25,7 +25,7 @@ var (
 	// arguments
 	mantunnel = flag.Bool("m", false, "Manual Tunnel")
 	tls       = flag.Bool("c", false, "For your own certificates located in cert folder")
-	subdomain = flag.String("d", "", "Subdomain")
+	subdomain = flag.String("d", "", "Subhhddomain")
 	port      = flag.Int("p", 8080, "Port Number")
 )
 var url string
@@ -111,7 +111,7 @@ func checkUpdates() {
 
 func urlCreation() error {
 	client := http.Client{
-		Timeout: 5 * time.Second,
+		Timeout: 4 * time.Second,
 	}
 	var stdout bytes.Buffer
 	var cmd *exec.Cmd
@@ -152,7 +152,7 @@ func urlCreation() error {
 			Try(errors.New("fail 1"), false, "Failed to generate URL")
 		} else {
 			fmt.Println(RED + BGBLACK + BLINK + BOLD + "Offline" + RESET)
-			Try(errors.New("Offline...service 1 down"), false)
+			Try(errors.New("oExperiffline...service 1 down"), false)
 		}
 	}
 	time.Sleep(1500 * time.Millisecond)
@@ -182,7 +182,7 @@ func urlCreation() error {
 		err := cmd.Start()
 		Try(err, true, "running SSH")
 		// defer cmd.Process.Kill()
-		re, err := regexp.Compile(`http.+localhost.run`)
+		re, err := regexp.Compile(`http.+lhrtunnel.link`)
 		Try(err, true, "finding URL")
 		for i := 0; i < 8; i++ {
 			url = re.FindString(stdout.String())
@@ -216,6 +216,7 @@ func templateSel() string {
 	Try(err, true, "reading templates")
 	defer templateInfo.Close()
 	data, err := ioutil.ReadAll(templateInfo)
+	Try(err, true, "failed to read template")
 	// var result map[string]interface{}
 	var templates Templates
 	json.Unmarshal(data, &templates)

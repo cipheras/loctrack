@@ -1,3 +1,7 @@
+v1.5.4
+- updated the regex to capture link
+- make build in bin directory
+
 v1.5.3
 - syso file added for windows properties
 - windows cmd issue resolved

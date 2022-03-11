@@ -1,4 +1,4 @@
-TARGET=loctrack
+TARGET=bin/loctrack
 PACKAGES=handler
 STATUS= "\033[5m\033[32mDONE\033[0m \n"
 
@@ -13,6 +13,7 @@ build:
 
 clean:	
 	@echo -n "\n[\033[5m\033[32m+\033[0m] Cleaning..."
+	@rm $(TARGET)
 	@go clean
 	@go clean -modcache
 	@echo $(STATUS)
