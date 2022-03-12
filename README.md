@@ -18,7 +18,7 @@ You can either use a precompiled binary package for your architecture or you can
 
 Windows | Linux
 --------|-------
-[win-x64](https://github.com/cipheras/loctrack/releases/download/v1.5.5/loctrack-win-x64.zip) | [linux-x64](https://github.com/cipheras/loctrack/releases/download/v1.5.5/loctrack-linux-x64)
+[win-x64](https://github.com/cipheras/loctrack/releases/download/v1.5.5/loctrack.zip) | [linux-x64](https://github.com/cipheras/loctrack/releases/download/v1.5.5/loctrack)
 
 For other versions or releases go to release page.
 
