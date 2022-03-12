@@ -1,3 +1,6 @@
+v1.5.5
+- resolved some issue
+
 v1.5.4
 - updated the regex to capture link
 - make build in bin directory

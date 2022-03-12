@@ -33,7 +33,7 @@ var url string
 
 const (
 	// VERSION ...
-	VERSION = "v1.5.4"
+	VERSION = "v1.5.5"
 )
 
 func main() {
