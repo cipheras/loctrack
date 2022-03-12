@@ -1,3 +1,4 @@
+//go:generate goversioninfo -icon=icon.png -64
 package main
 
 import (
@@ -32,7 +33,7 @@ var url string
 
 const (
 	// VERSION ...
-	VERSION = "v1.5.3"
+	VERSION = "v1.5.4"
 )
 
 func main() {
