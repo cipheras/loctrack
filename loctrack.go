@@ -346,7 +346,7 @@ func interrupt() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		fmt.Print("\n" + CYAN + "[" + PURPLE + "*" + CYAN + "] " + PURPLE + "Aborting & Cleaning " + RESET)
+		fmt.Print("\r\n" + CYAN + "[" + PURPLE + "*" + CYAN + "] " + PURPLE + "Aborting & Cleaning " + RESET)
 		for i := 1; i <= 5; i++ {
 			fmt.Print(PURPLE + "# " + RESET)
 			time.Sleep(time.Millisecond * 200)
