@@ -1,0 +1,43 @@
+{
+    "FixedFileInfo": {
+        "FileVersion": {
+            "Major": 1,
+            "Minor": 5,
+            "Patch": 5,
+            "Build": 0
+        },
+        "ProductVersion": {
+            "Major": 1,
+            "Minor": 5,
+            "Patch": 5,
+            "Build": 0
+        },
+        "FileFlagsMask": "3f",
+        "FileFlags ": "00",
+        "FileOS": "040004",
+        "FileType": "01",
+        "FileSubType": "00"
+    },
+    "StringFileInfo": {
+        "Comments": "A tool to locate people using social engineering",
+        "CompanyName": "A tool to locate people using social engineering",
+        "FileDescription": "LocTrack",
+        "FileVersion": "v1.5.5",
+        "InternalName": "",
+        "LegalCopyright": "",
+        "LegalTrademarks": "",
+        "OriginalFilename": "",
+        "PrivateBuild": "",
+        "ProductName": "LocTrack",
+        "ProductVersion": "v1.5.5",
+        "SpecialBuild": ""
+    },
+    "VarFileInfo": {
+        "Translation": {
+            "LangID": "0409",
+            "CharsetID": "04B0"
+        }
+    },
+    "IconPath": "",
+    "ManifestPath": ""
+}
